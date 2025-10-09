@@ -1,1 +1,29 @@
+version: "3.8"
 
+services:
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    container_name: gateway
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    networks:
+      - internal
+    volumes:
+      - gateway_logs:/var/log/nginx
+      - gateway_certs:/etc/nginx/certs
+
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+
+networks:
+  internal:
+
+volumes:
+  gateway_logs:
+  gateway_certs:
