@@ -29,3 +29,4 @@ scrape_configs:
         replacement: "blackbox_exporter:9115"
     static_configs:
       - targets: ['http://gateway/']
+
