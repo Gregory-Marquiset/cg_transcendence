@@ -81,7 +81,6 @@ clean:
 prune:
 	@echo "⚠️  Attention: ceci supprime images/volumes réseaux non utilisés."
 	docker system prune -af
-	docker volume prune -f
 	docker network prune -f || true
 
 ## Vérifie que la gateway répond (port rootless: 8080 -> 80)
