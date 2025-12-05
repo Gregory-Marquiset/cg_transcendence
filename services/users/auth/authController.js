@@ -7,7 +7,7 @@ export const authRegister = async function (req, reply) {
 	console.log(`\n${JSON.stringify(req.body)}\n`);
 
 	const now = new Date();
-	const dateTime = `${now.getDate()}-${now.getMonth()}-${now.getFullYear()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+	const dateTime = new Date().toISOString();
 
 	try {
 		const hashedPWD = await app.bcrypt.hash(req.body.password);
@@ -241,7 +241,7 @@ export const auth2faSetup = async function (req, reply) {
 
 //le front met un header dans la req: Authorization: Bearer <token>
 export const auth2faVerify = async function (req, reply) {
-	
+
 	try {
 		const secret = await getRowFromDB(`SELECT twofa_enabled, twofa_secret FROM users WHERE id = ?`, [req.user.id]);
 		console.log(`\nauth2faVerify: secret.twofa_enabled: ${secret.twofa_enabled}\nsecret.twofa_secret: ${secret.twofa_secret}`);

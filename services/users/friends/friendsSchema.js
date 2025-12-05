@@ -6,7 +6,9 @@ export const sendFriendRequestOpts = {
 			201: {
 				type: "object",
 				properties: {
-					message: { type: "string" }
+					sender_id: { type: "integer" },
+					receiver_id: { type: "integer" },
+					status: { type: "string" }
 				}
 			}
 		}
