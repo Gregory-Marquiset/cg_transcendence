@@ -12,7 +12,7 @@ export const authRegister = async function (req, reply) {
 	try {
 		const hashedPWD = await app.bcrypt.hash(req.body.password);
 
-		const result = await runSql(`INSERT INTO users(username, email, password, avatar_path, createdAt, twofa_enabled, status) 
+		await runSql(`INSERT INTO users(username, email, password, avatar_path, createdAt, twofa_enabled, status) 
 			VALUES (?, ?, ?, ?, ?, ?, ?)`, [req.body.username, req.body.email, hashedPWD, "avatars/default.jpg", dateTime, 0, "offline"]);
 		
 		return (reply.code(201).send("New entry in database"));
@@ -20,7 +20,10 @@ export const authRegister = async function (req, reply) {
 		console.error(`\nERROR authRegister: ${err.message}\n`);
 		const e = new Error();
 		if (err.code === "SQLITE_CONSTRAINT")
+		{
 			e.statusCode = 409;
+			e.message = "Conflict";
+		}
 		else
 			e.statusCode = 500;
 		throw e;

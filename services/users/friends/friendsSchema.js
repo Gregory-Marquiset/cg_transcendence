@@ -15,3 +15,25 @@ export const sendFriendRequestOpts = {
 	},
 	handler: friendsController.sendFriendsRequest
 }
+
+export const manageFriendRequestOpts = {
+	schema: {
+		body: {
+			type: "object",
+			properties: {
+				action: { type: "string" }
+			},
+			required: ["action"]
+		},
+		response: {
+			200: {
+				type: "object",
+				properties: {
+					status: { type: "string" }
+				},
+				required: ["status"]
+			}
+		}
+	},
+	handler: friendsController.manageFriendRequest
+}
