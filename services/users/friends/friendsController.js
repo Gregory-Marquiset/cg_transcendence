@@ -199,8 +199,6 @@ export const friendsList = async function (req, reply) {
 	try {
 		const friendships = await getAllRowsFromDB('SELECT * FROM friendships WHERE status = ? AND (sender_id = ? OR receiver_id = ?)',
 			["accepted", req.user.id, req.user.id]);
-		if (!friendships)
-			throw httpError(404, "No friends added");
 		let friendsIds = [];
 		friendships.forEach(friend => {
 			//console.log(`\nfriendsList friendships: ${JSON.stringify(friend)}\n`);
